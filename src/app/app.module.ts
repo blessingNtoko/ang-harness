@@ -4,13 +4,17 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { HubsComponent } from './hubs/hubs.component';
 
 const config: SocketIoConfig = { url: 'http://futureenvision.ddns.net:369', options: {} };
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    HubsComponent
   ],
   imports: [
     BrowserModule,
