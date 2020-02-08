@@ -15,7 +15,7 @@ export class HubsComponent implements OnInit {
   ngOnInit() {
     this.socket.sendData('in_controller',
     {
-      observable: 'login',
+      observable: 'hubs',
       request_data: {
         vachellia: {
         request_data: {
@@ -30,7 +30,7 @@ export class HubsComponent implements OnInit {
     uuid: this.socket.userToken
   },
   ).subscribe((data) => {
-    console.log('[onSubmit][data] -> ', data);
+    console.log('[onInit - Hubs][data] -> ', data);
     // if (data['userToken'] && data['userID']) {
     //   if (data['userToken'] === this.socket['userToken'] && data['userID'] === this.socket['userID']) {
     //     console.log('[Validation Checks] -> yes they are');

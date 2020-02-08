@@ -14,29 +14,33 @@ export class PostsComponent implements OnInit {
 
   ngOnInit() {
     this.socket.sendData('in_controller',
-    {
-      observable: 'login',
-      request_data: {
-        vachellia: {
+      {
+        observable: 'posts',
         request_data: {
-          posts: {
-            '--select': '*',
+          vachellia: {
+            request_data: {
+              hubs: {
+                '--select': '*',
+                posts: {
+                  '--select': '*',
+                }
+              }
+
+            },
+            endpoint: '*',
+            method: 'GET',
           }
         },
-        endpoint: '*',
-        method: 'GET',
-      }
-    },
-    uuid: this.socket.userToken
-  },
-  ).subscribe((data) => {
-    console.log('[onInit][data] -> ', data);
-    // if (data['userToken'] && data['userID']) {
-    //   if (data['userToken'] === this.socket['userToken'] && data['userID'] === this.socket['userID']) {
-    //     console.log('[Validation Checks] -> yes they are');
-    //   }
-    // }
-  });
+        uuid: this.socket.userToken
+      },
+    ).subscribe((data) => {
+      console.log('[onInit - Posts][data] -> ', data);
+      // if (data['userToken'] && data['userID']) {
+      //   if (data['userToken'] === this.socket['userToken'] && data['userID'] === this.socket['userID']) {
+      //     console.log('[Validation Checks] -> yes they are');
+      //   }
+      // }
+    });
   }
 
 }
