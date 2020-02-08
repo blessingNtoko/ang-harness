@@ -12,3 +12,54 @@
         <button type="submit">Login</button>
     </form>
 </div>
+
+<br />
+
+<div>
+    <form [formGroup]="postsForm" (ngSubmit)="onPost()">
+        <div>
+            <input type="text" formControlName="username" required maxlength="25" />
+        </div>
+        <br />
+
+        <div>
+            <input type="text" formControlName="password" required minlength="4" maxlength="16" />
+        </div>
+
+        <button type="submit">Post</button>
+    </form>
+</div>
+
+<br />
+
+<div>
+    <form [formGroup]="commentsForm" (ngSubmit)="onComment()">
+        <div>
+            <input type="text" formControlName="username" required maxlength="25" />
+        </div>
+        <br />
+
+        <div>
+            <input type="text" formControlName="password" required minlength="4" maxlength="16" />
+        </div>
+
+        <button type="submit">Comment</button>
+    </form>
+</div>
+
+<br />
+
+<div>
+    <form [formGroup]="commentsForm" (ngSubmit)="onProfile()">
+        <div>
+            <input type="text" formControlName="username" required maxlength="25" />
+        </div>
+        <br />
+
+        <div>
+            <input type="text" formControlName="password" required minlength="4" maxlength="16" />
+        </div>
+
+        <button type="submit">Profile</button>
+    </form>
+</div>

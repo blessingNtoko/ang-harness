@@ -26,6 +26,9 @@ export class SocketService {
     },
     {
       name: 'posts',
+    },
+    {
+      name: 'profile',
     }
   ];
 
@@ -85,8 +88,24 @@ export class SocketService {
         uuid: data['uuid']
       };
 
-      this.socket.emit(channel, getObj);
-      console.log('emitted', getObj);
+      const postObj = {
+        request_data: data['request_data'],
+        endpoint: 'auth',
+        method: 'POST',
+        uuid: data['uuid']
+      }
+
+      if (data['request_data']['method'] === 'GET') {
+        console.log('[soendData][check] -> its a get');
+        this.socket.emit(channel, getObj);
+        console.log('emitted', getObj);
+
+      } else if (data['request_data']['method'] === 'POST') {
+        console.log('[soendData][check] -> its a post');
+        this.socket.emit(channel, postObj);
+        console.log('emitted', postObj);
+
+      }
     } catch (e) {
       console.error('Error in socket sendData ->', e);
     }
