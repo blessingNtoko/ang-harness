@@ -1,1 +1,14 @@
-<p>login works!</p>
+<div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div>
+            <input type="text" formControlName="username" required maxlength="25" />
+        </div>
+        <br />
+
+        <div>
+            <input type="text" formControlName="password" required minlength="4" maxlength="16" />
+        </div>
+
+        <button type="submit">Login</button>
+    </form>
+</div>

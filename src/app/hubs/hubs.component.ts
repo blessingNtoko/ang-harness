@@ -13,9 +13,7 @@ export class HubsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.socket.hubData.subscribe((data) => {
-      console.log('hubData ->', data);
-    });
+
   }
 
 }

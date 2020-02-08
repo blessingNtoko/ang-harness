@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 
@@ -18,7 +19,8 @@ const config: SocketIoConfig = { url: 'http://futureenvision.ddns.net:369', opti
   ],
   imports: [
     BrowserModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
