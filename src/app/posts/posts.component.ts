@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { SocketService } from '../services/socket.service';
 
 @Component({
-  selector: 'app-hubs',
-  templateUrl: './hubs.component.html',
-  styleUrls: ['./hubs.component.scss']
+  selector: 'app-posts',
+  templateUrl: './posts.component.html',
+  styleUrls: ['./posts.component.scss']
 })
-export class HubsComponent implements OnInit {
+export class PostsComponent implements OnInit {
 
   constructor(
     private socket: SocketService
@@ -19,7 +19,7 @@ export class HubsComponent implements OnInit {
       request_data: {
         vachellia: {
         request_data: {
-          hubs: {
+          posts: {
             '--select': '*',
           }
         },
@@ -30,7 +30,7 @@ export class HubsComponent implements OnInit {
     uuid: this.socket.userToken
   },
   ).subscribe((data) => {
-    console.log('[onSubmit][data] -> ', data);
+    console.log('[onInit][data] -> ', data);
     // if (data['userToken'] && data['userID']) {
     //   if (data['userToken'] === this.socket['userToken'] && data['userID'] === this.socket['userID']) {
     //     console.log('[Validation Checks] -> yes they are');

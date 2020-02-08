@@ -7,19 +7,29 @@ import { Observable, Subject } from 'rxjs';
 })
 export class SocketService {
 
-  public hubData = new Observable<any>();
-  public userToken = new Observable<string>();
+  public hubData: any;
+  public userToken: string;
+  public userID: string;
+  public commentsData: any;
+  public postsData: any;
 
   public observablesArray = [];
   public apiDefinition = [
     {
       name: 'login',
+    },
+    {
+      name: 'hubs',
+    },
+    {
+      name: 'comments',
+    },
+    {
+      name: 'posts',
     }
   ];
 
-  public userID: string;
-  public commentsData: any;
-  public postsData: any;
+
 
   constructor(
     private socket: Socket
@@ -72,7 +82,7 @@ export class SocketService {
         request_data: data['request_data'],
         endpoint: '*',
         method: 'GET',
-        uuid: ''
+        uuid: data['uuid']
       };
 
       this.socket.emit(channel, getObj);
@@ -95,29 +105,28 @@ export class SocketService {
             this.processLogin('login', data['vachellia_command_centers']['login']);
           } else {
             if (data['vachellia_command_centers']['vachellia']) {
+              const dataToProcess = data['vachellia_command_centers']['vachellia'][0];
 
+              if (dataToProcess['status'] && dataToProcess['status'] === 'completed') {
+
+                if (dataToProcess['hubs']) {
+                  this.processHubs('hubs', dataToProcess['hubs']);
+
+                }
+
+                if (dataToProcess['comments']) {
+                  this.processComments('comments', dataToProcess['comments']);
+                }
+
+                if (dataToProcess['posts']) {
+                  this.processPosts('posts', dataToProcess['posts']);
+                }
+              } else if (dataToProcess['status'] && dataToProcess['status'] === 'error') {
+                console.error('Error has occurred');
+              }
             }
           }
-          // if (dataToProcess['status'] && dataToProcess['status'] === 'completed') {
-          //   const dataToProcess = [0];
 
-          //   if (dataToProcess['login']) {
-          //     this.processLogin('login', dataToProcess['login']);
-          //   }
-
-          //   if (dataToProcess['hubs']) {
-          //     this.processHubs(dataToProcess['hubs']);
-
-          //   }
-
-          //   if (dataToProcess['comments']) {
-          //     this.processComments(dataToProcess['comments']);
-          //   }
-
-          //   if (dataToProcess['posts']) {
-          //     this.processPosts(dataToProcess['posts']);
-          //   }
-          // }
         }
       });
     } catch (e) {
@@ -125,11 +134,13 @@ export class SocketService {
     }
   }
 
-  public processHubs(data: any) {
+  public processHubs(request, data: any) {
     console.log('[SocketService][processHubs] ->', data);
 
     try {
       this.hubData = data;
+
+      this.nextInObservable(request, this.hubData);
 
     } catch (e) {
       console.log('[SocketService][processHubs] ->', data);
@@ -158,11 +169,13 @@ export class SocketService {
 
   }
 
-  public processComments(data: any) {
+  public processComments(request, data: any) {
     console.log('[SocketService][processComments] ->', data);
 
     try {
       this.commentsData = data;
+
+      this.nextInObservable(request, this.commentsData);
 
     } catch (e) {
       console.log('[SocketService][processComments] ->', data);
@@ -170,11 +183,13 @@ export class SocketService {
 
   }
 
-  public processPosts(data: any) {
+  public processPosts(request, data: any) {
     console.log('[SocketService][processPosts] ->', data);
 
     try {
       this.postsData = data;
+
+      this.nextInObservable(request, this.postsData);
 
     } catch (e) {
       console.log('[SocketService][processPosts] ->', data);
